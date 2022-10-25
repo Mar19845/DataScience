@@ -1,0 +1,11 @@
+Cython
+prophet
+seaborn
+matplotlib
+scikit-learn
+jupyterlab
+notebook
+pandas-profiling
+statsmodels
+scalecast
+pmdarima
