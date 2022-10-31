@@ -124,9 +124,10 @@ def arima_model(data, train, test, n_periods_val):
     return model,prediction
 
 def Prophet_model(data,interval_width = 0.95):
-    model = Prophet(interval_width = interval_width)
+    model = Prophet(interval_width = interval_width,daily_seasonality=True)
     model.fit(data)
-    future_date = model.make_future_dataframe(periods=36, freq='MS')
+    #future_date = model.make_future_dataframe(periods=365, freq='MS')
+    future_date = model.make_future_dataframe(periods=365)
     future_date.tail()
     
     prediction = model.predict(future_date)
@@ -140,10 +141,10 @@ def Prophet_model(data,interval_width = 0.95):
 def graph_prediction(data,prediction,name):
     last_date = len(data)
     plt.figure(figsize=(14,7)) 
-    plt.title('Original data and Predicted values in '+ name + ' Temperature 3 years in the future')
+    plt.title('Original data and Predicted values in '+ name + ' Price in One year in the future')
     plt.plot(data.ds, data.y, 'b',label="Original") # plotting t, b separately 
-    plt.plot(prediction.iloc[last_date:].ds, prediction.iloc[last_date:].yhat, 'g',label="Predicted")
+    plt.plot(prediction.ds, prediction.yhat, 'g',label="Predicted")
     plt.xlabel("Date")
-    plt.ylabel("Temperature (°C)")
+    plt.ylabel("Price ($)")
     plt.legend(loc="upper left")
     plt.show()
